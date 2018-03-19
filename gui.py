@@ -7,7 +7,8 @@ import _thread
 class GUI:
     def __init__(self, master):
         self.master = master
-
+        
+        self.planes = 1000
         self.sigma_photo = PhotoImage(file="./res/sigma_left.png")
         self.right_bracket_photo = PhotoImage(file="./res/sigma_right.png")
 
@@ -49,7 +50,11 @@ class GUI:
         self.x_32_entry.grid(row=3, column=2)
         self.x_33_entry.grid(row=3, column=3)
 
+        self.planes_label = Label(master, text="Número de planos: ")
+        self.planes_label.grid(row=4, column=1)
         self.planes_entry = Entry(master, justify='center')
+        self.planes_entry.insert(0, '1000')
+        self.planes_entry.grid(row=4, column=2, padx=5)
 
         self.generate_btn = Button(
             master,
@@ -75,10 +80,10 @@ class GUI:
         self.credits_label = Label(
             master,
             text="Software creado por Nicky Garcia F.\n" +
-            "Tkinter, Pyplot y NumPy son de sus respectivos autores.\n" +
-            "Sigue la licencia MIT. Código fuente disponible en:" +
+            "Tkinter, Matplotlib y NumPy son de sus respectivos autores.\n" +
+            "Sigue la licencia MIT. Código fuente disponible en: " +
             "https://github.com/kotoromo",
-            font=("Times New Roman", 11)
+            font=("Times New Roman", 9)
         )
         self.credits_label.grid(sticky='S', columnspan=6)
 
@@ -86,7 +91,10 @@ class GUI:
         stress_tensor = self.produce_tensor()
         try:
             print("Starting thread!")
-            _thread.start_new_thread(MohrCircles.draw(stress_tensor))
+            _thread.start_new_thread(
+                MohrCircles.draw(stress_tensor, self.planes)
+            )
+
         except:
             print("Thread finished")
 
@@ -129,6 +137,8 @@ class GUI:
                     float(self.x_33_entry.get())
                 ]
             ])
+
+            self.planes = int(self.planes_entry.get())
 
             return stress_tensor
         except:
