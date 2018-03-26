@@ -5,7 +5,7 @@ import numpy as np
 class MohrCircles:
     def __init__(self):
         pass
-    
+
     @staticmethod
     def draw(stress_tensor, planes=1000):
         for i in range(0, planes):
@@ -20,4 +20,13 @@ class MohrCircles:
         plt.xlabel('Componente normal')
         plt.ylabel('Componente tangencial')
         plt.title('Ciculos de Mohr')
+        plt.subplots_adjust(
+            top=0.93,
+            bottom=0.1,
+            left=0.165,
+            right=0.83,
+            hspace=0.2,
+            wspace=0.5
+        )
+
         plt.show()
