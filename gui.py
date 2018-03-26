@@ -1,7 +1,8 @@
-from tkinter import Tk, Label, Button, Entry, PhotoImage, END, messagebox
+from tkinter import Tk, Label, Button, Entry, PhotoImage, END, messagebox, StringVar
 from numpy import array
 from circles import MohrCircles
 import _thread
+from tensors import Tensors
 
 
 class GUI:
@@ -26,17 +27,28 @@ class GUI:
         self.right_bracket = Label(master, image=self.right_bracket_photo)
         self.right_bracket.grid(rowspan=3, column=4, row=1, sticky='W')
 
-        self.x_11_entry = Entry(master, justify='center')
-        self.x_12_entry = Entry(master, justify='center')
-        self.x_13_entry = Entry(master, justify='center')
+        # Setting stringvars...
+        self.x_11 = StringVar()
+        self.x_12 = StringVar()
+        self.x_13 = StringVar()
+        self.x_21 = StringVar()
+        self.x_22 = StringVar()
+        self.x_23 = StringVar()
+        self.x_31 = StringVar()
+        self.x_32 = StringVar()
+        self.x_33 = StringVar()
 
-        self.x_21_entry = Entry(master, justify='center')
-        self.x_22_entry = Entry(master, justify='center')
-        self.x_23_entry = Entry(master, justify='center')
+        self.x_11_entry = Entry(master, justify='center', textvariable=self.x_11)
+        self.x_12_entry = Entry(master, justify='center', textvariable=self.x_12)
+        self.x_13_entry = Entry(master, justify='center', textvariable=self.x_13)
 
-        self.x_31_entry = Entry(master, justify='center')
-        self.x_32_entry = Entry(master, justify='center')
-        self.x_33_entry = Entry(master, justify='center')
+        self.x_21_entry = Entry(master, justify='center', textvariable=self.x_21)
+        self.x_22_entry = Entry(master, justify='center', textvariable=self.x_22)
+        self.x_23_entry = Entry(master, justify='center', textvariable=self.x_23)
+
+        self.x_31_entry = Entry(master, justify='center', textvariable=self.x_31)
+        self.x_32_entry = Entry(master, justify='center', textvariable=self.x_32)
+        self.x_33_entry = Entry(master, justify='center', textvariable=self.x_33)
 
         self.x_11_entry.grid(row=1, column=1)
         self.x_12_entry.grid(row=1, column=2)
@@ -63,19 +75,27 @@ class GUI:
         )
         self.generate_btn.grid(row=5, column=1, pady=25, padx=5)
 
+        self.principal_stresses_btn = Button(
+            master,
+            text="Obtener esfuerzos principales",
+            command=self.generate_principal_stresses
+        )
+
+        self.principal_stresses_btn.grid(row=5, column=2, pady=25, padx=5)
+
         self.clear_btn = Button(
             master,
             text="Limpiar campos",
             command=self.clear_fields
         )
-        self.clear_btn.grid(row=5, column=2, pady=25, padx=5)
+        self.clear_btn.grid(row=5, column=3, pady=25, padx=5)
 
         self.quit_btn = Button(
             master,
             text="Salir",
             command=self.master.quit
         )
-        self.quit_btn.grid(row=5, column=3, pady=25, padx=5)
+        self.quit_btn.grid(row=5, column=4, pady=25, padx=5)
 
         self.credits_label = Label(
             master,
@@ -86,6 +106,9 @@ class GUI:
             font=("Times New Roman", 9)
         )
         self.credits_label.grid(sticky='S', columnspan=6)
+
+        # Cleaning...
+        self.clear_fields()
 
     def generate_circles(self):
         stress_tensor = self.produce_tensor()
@@ -106,35 +129,51 @@ class GUI:
             return
         else:
             self.clear_fields()
+    
+    def generate_principal_stresses(self):
+        tensor = self.produce_tensor()
+        tensor = Tensors.principal_stresses(tensor)
+
+        # put it in the entry boxes.
+        self.clear_fields()
+        self.x_11.set(tensor[0])
+        self.x_12.set(0)
+        self.x_13.set(0)
+        self.x_21.set(0)
+        self.x_22.set(tensor[1])
+        self.x_23.set(0)
+        self.x_31.set(0)
+        self.x_32.set(0)
+        self.x_33.set(tensor[2])  
 
     def clear_fields(self):
-        self.x_11_entry.delete(0, END)
-        self.x_12_entry.delete(0, END)
-        self.x_13_entry.delete(0, END)
-        self.x_21_entry.delete(0, END)
-        self.x_22_entry.delete(0, END)
-        self.x_23_entry.delete(0, END)
-        self.x_31_entry.delete(0, END)
-        self.x_32_entry.delete(0, END)
-        self.x_33_entry.delete(0, END)
+        self.x_11.set(0)
+        self.x_12.set(0)
+        self.x_13.set(0)
+        self.x_21.set(0)
+        self.x_22.set(0)
+        self.x_23.set(0)
+        self.x_31.set(0)
+        self.x_32.set(0)
+        self.x_33.set(0)
 
     def produce_tensor(self):
         try:
             stress_tensor = array([
                 [
-                    float(self.x_11_entry.get()),
-                    float(self.x_12_entry.get()),
-                    float(self.x_13_entry.get())
+                    float(self.x_11.get()),
+                    float(self.x_12.get()),
+                    float(self.x_13.get())
                 ],
                 [
-                    float(self.x_21_entry.get()),
-                    float(self.x_22_entry.get()),
-                    float(self.x_23_entry.get())
+                    float(self.x_21.get()),
+                    float(self.x_22.get()),
+                    float(self.x_23.get())
                 ],
                 [
-                    float(self.x_31_entry.get()),
-                    float(self.x_32_entry.get()),
-                    float(self.x_33_entry.get())
+                    float(self.x_31.get()),
+                    float(self.x_32.get()),
+                    float(self.x_33.get())
                 ]
             ])
 
