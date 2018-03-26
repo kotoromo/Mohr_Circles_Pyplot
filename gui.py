@@ -1,4 +1,5 @@
-from tkinter import Tk, Label, Button, Entry, PhotoImage, END, messagebox, StringVar
+from tkinter import Tk, Label, Button, Entry
+from tkinter import PhotoImage, END, messagebox, StringVar
 from numpy import array
 from circles import MohrCircles
 import _thread
@@ -8,7 +9,7 @@ from tensors import Tensors
 class GUI:
     def __init__(self, master):
         self.master = master
-        
+
         self.planes = 1000
         self.sigma_photo = PhotoImage(file="./res/sigma_left.png")
         self.right_bracket_photo = PhotoImage(file="./res/sigma_right.png")
@@ -38,17 +39,35 @@ class GUI:
         self.x_32 = StringVar()
         self.x_33 = StringVar()
 
-        self.x_11_entry = Entry(master, justify='center', textvariable=self.x_11)
-        self.x_12_entry = Entry(master, justify='center', textvariable=self.x_12)
-        self.x_13_entry = Entry(master, justify='center', textvariable=self.x_13)
+        self.x_11_entry = Entry(
+            master, justify='center', textvariable=self.x_11
+            )
+        self.x_12_entry = Entry(
+            master, justify='center', textvariable=self.x_12
+        )
+        self.x_13_entry = Entry(
+            master, justify='center', textvariable=self.x_13
+        )
 
-        self.x_21_entry = Entry(master, justify='center', textvariable=self.x_21)
-        self.x_22_entry = Entry(master, justify='center', textvariable=self.x_22)
-        self.x_23_entry = Entry(master, justify='center', textvariable=self.x_23)
+        self.x_21_entry = Entry(
+            master, justify='center', textvariable=self.x_21
+        )
+        self.x_22_entry = Entry(
+            master, justify='center', textvariable=self.x_22
+        )
+        self.x_23_entry = Entry(
+            master, justify='center', textvariable=self.x_23
+        )
 
-        self.x_31_entry = Entry(master, justify='center', textvariable=self.x_31)
-        self.x_32_entry = Entry(master, justify='center', textvariable=self.x_32)
-        self.x_33_entry = Entry(master, justify='center', textvariable=self.x_33)
+        self.x_31_entry = Entry(
+            master, justify='center', textvariable=self.x_31
+        )
+        self.x_32_entry = Entry(
+            master, justify='center', textvariable=self.x_32
+        )
+        self.x_33_entry = Entry(
+            master, justify='center', textvariable=self.x_33
+        )
 
         self.x_11_entry.grid(row=1, column=1)
         self.x_12_entry.grid(row=1, column=2)
@@ -105,7 +124,7 @@ class GUI:
             "https://github.com/kotoromo",
             font=("Times New Roman", 9)
         )
-        self.credits_label.grid(sticky='S', columnspan=6)
+        self.credits_label.grid(sticky='S', columnspan=6, rowspan=3)
 
         # Cleaning...
         self.clear_fields()
@@ -129,7 +148,7 @@ class GUI:
             return
         else:
             self.clear_fields()
-    
+
     def generate_principal_stresses(self):
         tensor = self.produce_tensor()
         tensor = Tensors.principal_stresses(tensor)
@@ -144,7 +163,7 @@ class GUI:
         self.x_23.set(0)
         self.x_31.set(0)
         self.x_32.set(0)
-        self.x_33.set(tensor[2])  
+        self.x_33.set(tensor[2])
 
     def clear_fields(self):
         self.x_11.set(0)
@@ -190,6 +209,7 @@ class GUI:
 def start():
     root = Tk()
     root.title('Circulos de Mohr')
+    root.wm_resizable(width=False, height=False)
     root.iconbitmap("./res/sigma.ico")
     myGUI = GUI(root)
     root.mainloop()
