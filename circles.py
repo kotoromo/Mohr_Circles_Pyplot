@@ -20,6 +20,7 @@ class MohrCircles:
         plt.xlabel('Componente normal')
         plt.ylabel('Componente tangencial')
         plt.title('Ciculos de Mohr')
+        plt.grid(b=True)
         plt.subplots_adjust(
             top=0.93,
             bottom=0.1,
@@ -28,5 +29,6 @@ class MohrCircles:
             hspace=0.2,
             wspace=0.5
         )
+        plt.savefig("./Circulos de Mohr.png")
 
         plt.show()
