@@ -130,11 +130,15 @@ class GUI:
         self.clear_fields()
 
     def generate_circles(self):
+        topng = messagebox.askyesno(
+            "¿Deseas generar una imagen de la gráfica?", "¿Generar imagen?"
+        )
+
         stress_tensor = self.produce_tensor()
         try:
             print("Starting thread!")
             _thread.start_new_thread(
-                MohrCircles.draw(stress_tensor, self.planes)
+                MohrCircles.draw(stress_tensor, self.planes, topng=topng)
             )
 
         except:
