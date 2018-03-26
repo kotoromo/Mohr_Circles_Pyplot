@@ -3,3 +3,4 @@ __pycache__/gui.cpython-36.pyc
 __pycache__/tensors.cpython-36.pyc
 *.pyc
 .\__pycache__\
+*.png
