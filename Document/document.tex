@@ -1,5 +1,62 @@
 \documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{bm}
+
+\title{Círculos de Mohr}
+\author{García Fierros Nicky}
+
 
 \begin{document}
-    Hello World!
+    \maketitle
+    \pagenumbering{gobble}
+    \newpage
+    \pagenumbering{arabic}
+    
+    \tableofcontents
+    \newpage
+
+    \section{Introducción}
+
+    El esfuerzo es una medida de \textit{intensidad de fuerza} y es resultado de un 
+    cuerpo sujeto a cargas, ya sean internas o externas. En la teoría de la mecánica
+    del medio continuo un cuerpo es considerado libre de esfuerzos si las únicas
+    fuerzas presentes son aquellas fuerzas internas que mantienen al cuerpo unido.
+    Por lo tanto, los esfuerzos que son de interés son aquellos que resultan de la
+    aplicación de fuerzas por un agente externo.\\
+
+    Los esfuerzos pueden ser transformados para ser analizados desde distintos ángulos.
+    Particularmente, existe una rotación específica que permite reducir un tensor de
+    esfuerzos en sólo sus componentes normales de tal manera que el análisis se
+    simplifica bastánte al reducir el tensor de 9 posibles componentes a tan solo 3, de
+    tal manera que el uso de las ecuaciones que involucran a dichos esfuerzos de
+    simplifican bastante.\\
+    
+    Los círculos de Mohr son una representación gráfica de los esfuerzos normales y
+    tangenciales máximos de un tensor de esfuerzos. Para obtener este diagrama, se
+    hacen pasar por un punto \textit{p}, \textit{n} planos \bm{$\eta$} sobre
+    los que actúan los esfuerzos de tal manera que se crea un perfil en el que
+    las componentes normales y tangenciales del vector de esfuerzos \bm{$t^{\eta}$} generan círculos
+    representativos de los esfuezos que se aplican sobre dicho punto referidos a los
+    planos \bm{$\eta$} que se hacen pasar por este. Recuerde que, como vivimos en
+    un espacio con altura, anchura y profundidad, entonces en realidad los esfuerzos
+    deben ser considerados como puntos ${t}_{N}$ y ${t}_{S}$ con componentes
+    orientados hacia \bm{${\eta}$}.\\
+
+    El proyecto presentado en este documento es el de un software que grafica en un plano
+    ${t}_{N}$ \textit{vs} ${t}_{S}$ los círculos de Mohr que forman un tensor de esfuerzos.
+    A lo largo del documento se elaboran los análisis realizados para llegar a las 
+    ecuaciones que describen a dichos círculos.
+
+    \subsection{Definicion de esfuerzo}
+    \section{Principio de Euler-Cauchy}
+    \section{Tensor de esfuerzos}
+    \subsection{Que es un tensor?}
+    \subsection{Ecuaciones de equilibrio de la teoria de la elasticidad lineal}
+    \subsection{Simetria del tensor de esfuerzos}
+    \section{círculos de Mohr}
+    \subsection{Analisis para generar los círculos de Mohr}
+    \subsection{Esfuerzos principales}
+
+
 \end{document}
