@@ -4,6 +4,7 @@
 \usepackage{bm}
 \usepackage{amsmath}
 \usepackage{esvect}
+\usepackage{amssymb}
 
 \title{Círculos de Mohr}
 \author{García Fierros Nicky}
@@ -19,13 +20,14 @@
     \newpage
 
     \pagenumbering{roman}
-    \section{Notación}
+    \section*{Notación}
 
-    En este documento, los vectores están expresados con letras \textbf{negritas} o con
-    letras en \textit{cursiva} acompañanadas de un subíndice y un vector unitario.
+    En este documento, los vectores están expresados con letras \textbf{negritas}, con
+    letras en \textit{cursiva} acompañanadas de un subíndice y un vector unitario o con
+    una flecha encima.
 
     \begin{equation*}
-        \bm{v} \longleftrightarrow v_{i}\bm{i} \longleftrightarrow v_{i}\vv{i_{i}}
+        \vec{v} \Longleftrightarrow \bm{v} \Longleftrightarrow v_{i}\bm{i} \Longleftrightarrow v_{i}\vv{i_{i}}
     \end{equation*}
 
     \newpage
@@ -109,8 +111,83 @@
     \end{equation}
 
     \subsection{Tensor de esfuerzos}
-    \subsection{Ecuaciones de equilibrio de la teor\'{i}a de la elasticidad lineal}
-    \subsection{Simetr\'{i}a del tensor de esfuerzos}
+
+    Recuerde que el vector de esfuerzos $\bm{t^{\bm{(\eta)}}}$ est\'{a} asociado a un plano 
+    representado por su vector unitario $\bm{(\eta)}$. A partir de esta idea, se pueden
+    expresar entonces los esfuerzos en el plano cartesiano con coordenadas $x_{1}, x_{2}, x_{3}$ 
+    con vectores unitarios $\vec{i_{1}}, \vec{i_{2}}, \vec{i_{3}}$ de tal manera que se tiene que
+
+    \begin{equation}
+        \bm{t^{(\vec{i_{1}})}} = t_{1}^{(\vec{i_{1}})}\vec{i_{1}} + 
+        t_{2}^{(\vec{i_{1}})}\vec{i_{2}} + 
+        t_{3}^{(\vec{i_{1}})}\vec{i_{3}},
+    \end{equation}
+
+    \begin{equation}
+        \bm{t^{(\vec{i_{2}})}} = t_{1}^{(\vec{i_{2}})}\vec{i_{1}} + 
+        t_{2}^{(\vec{i_{2}})}\vec{i_{2}} + 
+        t_{3}^{(\vec{i_{2}})}\vec{i_{3}},
+    \end{equation}
+
+    \begin{equation}
+        \bm{t^{(\vec{i_{3}})}} = t_{1}^{(\vec{i_{3}})}\vec{i_{1}} + 
+        t_{2}^{(\vec{i_{3}})}\vec{i_{2}} + 
+        t_{3}^{(\vec{i_{3}})}\vec{i_{3}},
+    \end{equation}
+
+    ecuaciones que pueden ser expresadas en notaci\'{o}n \'{i}ndice como
+
+    \begin{equation}
+        \vec{t}^{(\vec{i_{i}})} = t_{j}^{(\vec{i_{i}})}\vec{i_{j}},
+    \end{equation}
+
+    \begin{equation}
+        \therefore \sigma_{ij} = t_{j}^{(\vec{i_{i}})} \Longrightarrow 
+        \sigma_{ij}\vec{i_{j}} = t_{j}^{(\vec{i_{i}})}\vec{i_{j}}.
+    \end{equation}
+
+    La ecuaci\'{o}n anterior puede ser escrita en notaci\'{o}n matricial de la siguiente manera:
+
+    \begin{equation}
+        \begin{bmatrix}
+            \vec{t}^{(\vec{i_{1}})} \\
+            \vec{t}^{(\vec{i_{2}})} \\
+            \vec{t}^{(\vec{i_{3}})}
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            \sigma_{11} && \sigma_{12} && \sigma_{13} \\
+            \sigma_{21} && \sigma_{22} && \sigma_{23} \\
+            \sigma_{31} && \sigma_{32} && \sigma_{33}
+        \end{bmatrix}
+        \begin{bmatrix}
+            \vec{i_{1}} \\
+            \vec{i_{2}} \\
+            \vec{i_{3}}.
+        \end{bmatrix}
+    \end{equation}
+
+    Adem\'{a}s es posible demostrar, dado
+
+    %figura va aqui
+
+    que
+
+    \begin{equation}
+        \vec{t}^{(\vec{\eta})} = \vec{\eta}\bm{\sigma}
+    \end{equation}
+
+    %\subsection{Ecuaciones de equilibrio de la teor\'{i}a de la elasticidad lineal}
+
+    Si se considera de nuevo el estado estacionario y los momentos generados por las fuerzas
+    que act\'{u}an sobre la superficie \textit{S} es posible demostrar que
+
+    \begin{equation}
+        \vec{\eta}\bm{\sigma} = \bm{\sigma}\vec{\eta}
+    \end{equation}
+
+
+    %\subsection{Simetr\'{i}a del tensor de esfuerzos}
     \section{Círculos de Mohr}
     \subsection{An\'{a}lisis para generar los círculos de Mohr}
     \subsection{Esfuerzos principales}
