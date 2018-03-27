@@ -174,7 +174,7 @@
     que
 
     \begin{equation}
-        \vec{t}^{(\vec{\eta})} = \vec{\eta}\bm{\sigma}
+        \vec{t}^{(\vec{\eta})} = \vec{\eta}\cdot\bm{\sigma}
     \end{equation}
 
     %\subsection{Ecuaciones de equilibrio de la teor\'{i}a de la elasticidad lineal}
@@ -183,14 +183,127 @@
     que act\'{u}an sobre la superficie \textit{S} es posible demostrar que
 
     \begin{equation}
-        \vec{\eta}\bm{\sigma} = \bm{\sigma}\vec{\eta}
+        \vec{\eta}\cdot\bm{\sigma} = \bm{\sigma}\cdot\vec{\eta}
     \end{equation}
 
 
     %\subsection{Simetr\'{i}a del tensor de esfuerzos}
     \section{Círculos de Mohr}
+    Como se ha explicado en las secciones anteriores, es posible definir el estado de esfuerzos
+    en un punto \textit{P} al hacer pasar una cantidad infinita de planos de corte $\eta$.
+    Como es imposible hacer pasar una infinidad de planos sobre un punto \textit{P}, se recurre
+    entonces a utilizar un n\'{u}mero lo suficientemente grande de planos para generar una
+    aproximaci\'{o}n aceptable del estado de esfuerzos sobre el punto \textit{P}. Es por eso
+    que para este proyecto, se ha decidido utilizar $1x10^3$ planos.
+
     \subsection{An\'{a}lisis para generar los círculos de Mohr}
+    
+    Para generar los circulos de Mohr, es necesario obtener vectores de esfuerzo asociados a
+    un plano arbitrario. Este vector de esfuerzo, como ya se elabor\'{o} en secciones
+    anteriores puede ser calculado mediante la expresiones siguientes:
+    
+    \begin{equation}
+        \vec{t}^{(\vec{\eta})} = \bm{\sigma} \cdot \vec{\eta},
+    \end{equation}
+
+    \begin{equation}
+        \vec{t}^{(\vec{\eta})} = \sigma_{ij}\vec{i_{i}}\otimes\vec{i_{j}}\cdot\eta_{k}\vec{i_{k}}
+        \Longrightarrow
+        \vec{t}^{(\vec{\eta})} = \sigma_{ik}\eta_{k}\vec{i_{i}}.
+    \end{equation}
+
+    El vector de esfuerzos est\'{a} conformado por una componente normal $t_{N}$ y una
+    componente tangencial $t_{S}$. 
+    
+    %figura del vector de esfuerzos
+
+    Para obtener dichas componentes s\'{o}lo basta
+    realizar un an\'{a}lisis geom\'{e}trico sencillo como se explica a continuaci\'{o}n.
+    Para obtener la componente normal, se observa de la figura anterior que $t_{N}$ es la
+    proyecci\'{o}n de $\vec{t}^{(\vec{\eta})}$ sobre $\vec{\eta}$, por lo que se tiene que
+
+    \begin{equation}
+        t_{N} = \vec{t}^{(\vec{\eta})} \cdot \vec{\eta},
+    \end{equation}
+
+    \begin{equation}
+        t_{N} = (\sigma_{ik}\eta_{k}\vec{i_{i}})\cdot\eta_{j}\vec{i_{j}}
+        \Longrightarrow
+        t_{N} = \sigma_{ik}\eta_{k}\eta_{i}.
+    \end{equation}
+
+    Adem\'{a}s, se observa que la componente tangencial puede ser obtenida empleando el
+    teorema de pit\'{a}goras. Se sabe que
+
+    \begin{equation}
+        \lvert \vec{t}^{(\vec{\eta})} \rvert^2 = \vec{t}^{(\vec{\eta})} \cdot \vec{t}^{(\vec{\eta})},
+    \end{equation}
+    
+    que desarrollando la notaci\'{o} \'{i}ndice queda expresada la anterior ecuaci\'{o}n como
+
+    \begin{equation}
+        \lvert \vec{t}^{(\vec{\eta})} \rvert^2 = \sigma_{ik}\eta_{k}\vec{i_{i}} \cdot
+        \sigma_{ml}\eta_{l}\vec{i_{m}} \Rightarrow
+        \lvert \vec{t}^{(\vec{\eta})} \rvert^2 = \sigma_{mk}\sigma_{ml}\eta_{k}\eta_{l},
+    \end{equation}
+
+    por lo que entonces, de la ecuaci\'{o}n
+
+    \begin{equation}
+        \lvert \vec{t}^{(\vec{\eta})} \rvert^2 = t_{S}^2 + t_{N}^2
+        \Rightarrow
+        t_{S}^2 = \lvert \vec{t}^{(\vec{\eta})} \rvert^2 - t_{N}^2,
+    \end{equation}
+
+    de tal manera que al sustituir la ecuaci\'{o}n (18) en la ecuaci\'{o}n (19) se tiene que 
+    $t_{S}$ puede ser calculada como
+
+    \begin{equation}
+        t_{S} = \lbrack
+            \sigma_{mk}\sigma_{ml}\eta_{k}\eta_{l} 
+            - (\sigma_{ik}\eta_{k}\eta_{i})^2 
+        \rbrack^\frac{1}{2}.
+    \end{equation}
+
+    Es importante recordar que $\bm{\eta}$ es un vector unitario y por lo tanto debe de cumplir que
+    \begin{equation}
+        \bm{\eta}\cdot\bm{\eta} = \eta_{i}\eta_{i} = 1.
+    \end{equation}
+    Es por eso que para generar los planos en el software, es necesario que, tras asignar valores aleatorios
+    dentro de un rango $[-10000, 10000]$ a cada uno de los componentes, hacer que $\bm{v}$, 
+    el vector generado, sea dividido por su modulo de tal manera que se obtenga un vector unitario $\bm{\eta}$.
+
+    \begin{equation}
+        \bm{\eta} = \frac{\bm{v}}{\lvert \bm{v} \rvert}
+    \end{equation}
+
+    Al programar dichas ecuaciones en el software, para el tensor de esfuerzos
+
+    \begin{equation*}
+        \begin{bmatrix}
+            1 & 1 & 0 \\
+            1 & 2 & 4 \\
+            0 & 4 & 2
+        \end{bmatrix}
+    \end{equation*}
+
+    %pantallazo del gui al ingresar el tensor para 1000 y 10000 planos
+
+    se obtuvo la siguiente gr\'{a}fica:
+
+    %grafica aqui con 1000 y 10000 planos
+
+    Observese que al disminuir el n\'{u}mero de planos, la gr\'{a}fica muestra mas huecos, por
+    lo que el estado de esfuerzos sobre el punto \textit{P} no es tan preciso.
+
+
     \subsection{Esfuerzos principales}
 
+    En la introducci\'{o}n del documento se mencion\'{o} que es posible transformar el
+    tensor de esfuerzos de tal manera que este se reduzca significantemente.
+
+    \begin{equation}
+        \sigma
+    \end{equation}
 
 \end{document}
