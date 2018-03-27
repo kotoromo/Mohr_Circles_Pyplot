@@ -2,6 +2,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
 \usepackage{bm}
+\usepackage{amsmath}
+\usepackage{esvect}
 
 \title{Círculos de Mohr}
 \author{García Fierros Nicky}
@@ -16,6 +18,19 @@
     \tableofcontents
     \newpage
 
+    \pagenumbering{roman}
+    \section{Notación}
+
+    En este documento, los vectores están expresados con letras \textbf{negritas} o con
+    letras en \textit{cursiva} acompañanadas de un subíndice y un vector unitario.
+
+    \begin{equation*}
+        \bm{v} \longleftrightarrow v_{i}\bm{i} \longleftrightarrow v_{i}\vv{i_{i}}
+    \end{equation*}
+
+    \newpage
+    \pagenumbering{arabic}
+
     \section{Introducción}
 
     El esfuerzo es una medida de \textit{intensidad de fuerza} y es resultado de un 
@@ -29,29 +44,71 @@
     Particularmente, existe una rotación específica que permite reducir un tensor de
     esfuerzos en sólo sus componentes normales de tal manera que el análisis se
     simplifica bastánte al reducir el tensor de 9 posibles componentes a tan solo 3, de
-    tal manera que el uso de las ecuaciones que involucran a dichos esfuerzos de
+    tal manera que el uso de las ecuaciones que involucran a dichos esfuerzos se
     simplifican bastante.\\
     
-    Los círculos de Mohr son una representación gráfica de los esfuerzos normales y
-    tangenciales máximos de un tensor de esfuerzos. Para obtener este diagrama, se
-    hacen pasar por un punto \textit{p}, \textit{n} planos \bm{$\eta$} sobre
-    los que actúan los esfuerzos de tal manera que se crea un perfil en el que
-    las componentes normales y tangenciales del vector de esfuerzos \bm{$t^{\eta}$} generan círculos
-    representativos de los esfuezos que se aplican sobre dicho punto referidos a los
-    planos \bm{$\eta$} que se hacen pasar por este. Recuerde que, como vivimos en
-    un espacio con altura, anchura y profundidad, entonces en realidad los esfuerzos
-    deben ser considerados como puntos ${t}_{N}$ y ${t}_{S}$ con componentes
-    orientados hacia \bm{${\eta}$}.\\
+    Los círculos de Mohr son una representación gráfica del estado de esfuerzos en un punto 
+    \textit{P}. Para obtener este diagrama, se hacen pasar por un punto \textit{P}, 
+    \textit{n} planos \bm{$\eta$} sobre los que actúan los esfuerzos de tal manera que se 
+    crea un perfil en el que las componentes normales y tangenciales del vector de esfuerzos 
+    \bm{$t^{\eta}$} generan círculos representativos de los esfuezos que se aplican sobre 
+    dicho punto referidos a los planos \bm{$\eta$} que se hacen pasar por este.\\
 
     El proyecto presentado en este documento es el de un software que grafica en un plano
-    ${t}_{N}$ \textit{vs} ${t}_{S}$ los círculos de Mohr que forman un tensor de esfuerzos.
-    A lo largo del documento se elaboran los análisis realizados para llegar a las 
-    ecuaciones que describen a dichos círculos.
+    ${t}_{N}$ \textit{vs} ${t}_{S}$ los círculos de Mohr que caracterizan a un tensor 
+    de esfuerzos. A lo largo del documento se elaboran los análisis realizados para llegar 
+    a las ecuaciones que describen a dichos círculos.
 
-    \subsection{Definicion de esfuerzo}
-    \section{Principio de Euler-Cauchy}
     \section{Tensor de esfuerzos}
-    \subsection{Que es un tensor?}
+
+    El esfuerzo es una medida de intensidad de fuerza producto de la aplicación de cargas
+    sobre el cuerpo; ya sea sobre cada unidad de volúmen del cuerpo (fuerzas de cuerpo);
+    o sobre la superficie de este; fuerzas distribuidas sobre cada unidad de superficie
+    del cuerpo (fuerzas de superficie) usualmente resultado de fuerzas de contacto.
+
+    \subsection{El principio de Euler-Cauchy}
+
+    A partir de lo anterior, si se considera un cuerpo material homogeneo e isotrópico
+    \textit{B} con superficie \textit{S}, y un volúmen \textit{V}, sujeto a fuerzas de
+    cuerpo \textbf{b} y fuerzas de superficie \textbf{p} arbitrarias; un punto interno 
+    al cuerpo \textit{P} por el que pasa un plano $S^{*}$ tal que divide al cuerpo
+    en dos partes I y II; entonces se tiene algo como muestra la figura 1.
+
+    Las fuerzas internas transmitidas a lo largo del plano de corte por la acción de
+    la sección II sobre la sección I se distribuyen sobre el elemento de área
+    $\Delta S^{*}$ que contiene al punto \textit{P} de forma que se genera una fuerza 
+    resultante $\Delta$\bm{$f$} y un momento resultante $\Delta$\bm{$M$} en el punto 
+    \textit{P}. El principio de Euler-Cauchy dice que en el limite conforme el área
+    $\Delta S^{*}$ disminuye a cero con \textit{P} contenido en dicha área, se obtiene
+
+    \begin{equation}
+        \lim_{\Delta S^{*} \to 0} \frac{\Delta \bm{f}}{\Delta S^{*}} =
+        \frac{d \bm{f}}{dS^{*}} =
+        \bm{t^{\bm{(\eta)}}},
+    \end{equation}
+
+    \begin{equation}
+        \lim_{\Delta S^{*} \to 0} \frac{\Delta \bm{M}}{\Delta S^{*}} = 0;
+    \end{equation}
+
+    donde el vector $\bm{t^{\bm{(\eta)}}}$ es conocido como el \textit{vector de esfuerzos}
+    referido a el plano $\bm{(\eta)}$.
+    Por lo tanto, para la infinidad de planos de corte $\bm{(\eta)}$ que pasan por \textit{P},
+    se tienen una infinidad de vectores de esfuerzos $\bm{t^{\bm{(\eta)}}}$ para una carga
+    dada aplicada al cuerpo. La totalidad de los pares $\bm{t^{\bm{(\eta)}}}$ y $\bm{(\eta)}$
+    en P definen el estado de esfuerzos en \textit{P}.
+
+    Es posible aplicar la tercera ley de Newton para demostrar que
+
+    \begin{equation}
+        \bm{t^{\bm{(\eta)}}} = - \bm{t^{\bm{(-\eta)}}},
+    \end{equation}
+
+    \begin{equation}
+        -\bm{t^{\bm{(\eta)}}} = \bm{t^{\bm{(-\eta)}}}.
+    \end{equation}
+
+    \subsection{¿Qué es un tensor?}
     \subsection{Ecuaciones de equilibrio de la teoria de la elasticidad lineal}
     \subsection{Simetria del tensor de esfuerzos}
     \section{círculos de Mohr}
