@@ -5,6 +5,13 @@
 \usepackage{amsmath}
 \usepackage{esvect}
 \usepackage{amssymb}
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=magenta,
+}
 
 \title{Círculos de Mohr}
 \author{García Fierros Nicky}
@@ -30,6 +37,15 @@
         \vec{v} \Longleftrightarrow \bm{v} \Longleftrightarrow v_{i}\bm{i} \Longleftrightarrow v_{i}\vv{i_{i}}
     \end{equation*}
 
+    \section*{Software}
+
+    El software programado para este proyecto se encuentra programado utilizando el lenguaje de programaci\'{o}n
+    \textit{Python} en su versi\'{o}n 3.6, disponible para su descarga en \url{https://www.python.org/}. Adem\'{a}s,
+    los paquetes \href{https://matplotlib.org/#}{\textit{matplotlib}}, \href{http://www.numpy.org/}{\textit{numpy}} y 
+    \href{https://wiki.python.org/moin/TkInter}{\textit{tkinter}} fueron empleados.
+
+    El c\'{o}digo fuente est\'{a} disponible para su descarga en \url{https://github.com/kotoromo/Mohr_Circles_Pyplot}.
+
     \newpage
     \pagenumbering{arabic}
 
@@ -43,10 +59,10 @@
     aplicación de fuerzas por un agente externo.\\
 
     Los esfuerzos pueden ser transformados para ser analizados desde distintos ángulos.
-    Particularmente, existe una rotación específica que permite reducir un tensor de
-    esfuerzos en sólo sus componentes normales de tal manera que el análisis se
+    Particularmente, existe una transformaci\'{o}n específica que permite reducir un tensor de
+    esfuerzos en sólo esfuerzos principales de tal manera que el análisis se
     simplifica bastánte al reducir el tensor de 9 posibles componentes a tan solo 3, de
-    tal manera que el uso de las ecuaciones que involucran a dichos esfuerzos se
+    modo que el uso de las ecuaciones que involucran a dichos esfuerzos se
     simplifican bastante.\\
     
     Los círculos de Mohr son una representación gráfica del estado de esfuerzos en un punto 
@@ -300,10 +316,166 @@
     \subsection{Esfuerzos principales}
 
     En la introducci\'{o}n del documento se mencion\'{o} que es posible transformar el
-    tensor de esfuerzos de tal manera que este se reduzca significantemente.
+    tensor de esfuerzos de tal manera que este se reduzca a un tensor con esfuerzos principales.
 
     \begin{equation}
-        \sigma
+        \overline{\sigma} = A \sigma A^{T} = 
+        \begin{bmatrix}
+            \overline{\sigma}_{11} & 0 & 0\\
+            0 & \overline{\sigma}_{22} & 0\\
+            0 & 0 & \overline{\sigma}_{33}
+        \end{bmatrix}
     \end{equation}
 
+    donde $\overline{\sigma}_{11}$, $\overline{\sigma}_{22}$ y $\overline{\sigma}_{33}$ son los esfuerzos
+    principales.
+    Las ecuaciones de los c\'{i}rculos de Mohr se simplifican tal que
+
+    \begin{equation}
+        \vec{\overline{t}}^{(\vec{\overline{\eta}})} = \overline{\sigma} \cdot \vec{\overline{\eta}},
+    \end{equation}
+
+    \begin{equation}
+        \vec{\overline{t}}^{(\vec{\overline{\eta}})} =
+        \begin{bmatrix}
+            \overline{\sigma}_{11} & 0 & 0\\
+            0 & \overline{\sigma}_{22} & 0\\
+            0 & 0 & \overline{\sigma}_{33}
+        \end{bmatrix}
+        \begin{bmatrix}
+            \overline{\eta}_{1} \\
+            \overline{\eta}_{2} \\
+            \overline{\eta}_{3}
+        \end{bmatrix},
+    \end{equation}
+
+    \begin{equation}
+        \vec{\overline{t}}^{(\vec{\overline{\eta}})} =
+        \overline{\sigma}_{11}\overline{\eta}_{1}\vec{i_{1}} +
+        \overline{\sigma}_{22}\overline{\eta}_{2}\vec{i_{2}} +
+        \overline{\sigma}_{33}\overline{\eta}_{3}\vec{i_{3}}.
+    \end{equation}
+
+    Para encontrar la componente normal $t_{N}$ se reduce entonces a
+
+    \begin{align}
+        \overline{t}_{N} &= \vec{\overline{t}}^{(\vec{\overline{\eta}})} \cdot \vec{\overline{\eta}},\\
+        \overline{t}_{N} &= \overline{\sigma}_{11}\overline{\eta}_{1}^2 +
+                            \overline{\sigma}_{22}\overline{\eta}_{2}^2 +
+                            \overline{\sigma}_{33}\overline{\eta}_{3}^2,
+    \end{align}
+
+    mientras que hallar la componente tangencial se reduce a
+
+    \begin{align}
+        \overline{t}_{S} &= \vec{\overline{\eta}} \cdot \vec{\overline{\eta}} - \overline{t}_{N}^2, \\
+        \overline{t}_{S} &= \lbrack
+        \overline{\sigma}_{11}^2\overline{\eta}_{1}^2 +
+        \overline{\sigma}_{22}^2\overline{\eta}_{2}^2 +
+        \overline{\sigma}_{33}^2\overline{\eta}_{3}^2 -
+        \overline{t}_{N}^2
+        \rbrack^\frac{1}{2}
+    \end{align}
+
+    Para obtener los esfuerzos principales, se propone que $\vec{\eta}$ y $\vec{t}^{(\vec{\eta})}$ se orienten
+    la misma direcci\'{o}n, lo que vuelve a $\vec{t}^{(\vec{\eta})}$ en un m\'{u}ltiplo de $\vec{\eta}$, y por
+    lo tanto
+
+    \begin{equation}
+        \vec{t}^{(\vec{\eta})} = \lambda\vec{\eta}
+    \end{equation}
+    \begin{equation}
+        \vec{t}^{(\vec{\eta})} = \lambda\eta_{i}\vec{i_{i}}
+    \end{equation}
+
+    Al igualar las ecuaciones (14) y (32) se tiene que
+
+    \begin{align}
+        \sigma_{ik}\eta_{k}\vec{i_{i}} &= \lambda\eta_{i}\vec{i_{i}}\\
+        (\sigma_{ik}\eta_{k} - \lambda\eta_{i})\vec{i_{i}} &= \vec{0}\\
+        (\sigma_{ik}\eta_{k} - \delta_{ik}\lambda\eta_{k})\vec{i_{i}} &= \vec{0}\\
+        \lbrack ( \sigma_{ik} - \delta{ik}\lambda )\eta_{k} \rbrack\vec{i_{i}} &= \vec{0}\\
+        (\sigma_{ik} - \delta_{ik}\lambda)\eta_{k} &= 0
+    \end{align}
+
+    Escrito en forma matricial:
+    \begin{equation}
+        \begin{bmatrix}
+            (\sigma_{11} - \lambda) & \sigma_{12} & \sigma_{13}\\
+            \sigma_{21} & (\sigma_{22} - \lambda) & \sigma_{23}\\
+            \sigma_{31} & \sigma_{32} & (\sigma_{33} - \lambda)
+        \end{bmatrix}
+        \begin{bmatrix}
+            \eta_{1}\\
+            \eta_{2}\\
+            \eta_{3}
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            0\\
+            0\\
+            0
+        \end{bmatrix}
+    \end{equation}
+
+    La soluci\'{o}n trivial es $\vec{\eta} = \vec{0}$, pero recuerde que $\vec{\eta}$ debe ser 
+    un vector unitario $\vec{\eta}\cdot\vec{\eta}=1$ y $\vec{0}$ no es unitario, por lo que
+    para encontrar una soluci\'{o}n no trivial y correcta se debe evaluar el determinante de
+    la matriz de coeficientes
+
+    \begin{equation}
+        \lambda^3 - I\lambda^2 + II\lambda - III = 0
+    \end{equation}
+
+    donde
+
+    \begin{align}
+        I &= \sigma_{ii} = tr(\sigma)\\
+        II &= \frac{1}{2}(\sigma_{ii}\sigma_{jj} - \sigma_{ij}\sigma_{ji})\\
+        III &= \epsilon_{ijk}\sigma_{1i}\sigma_{2j}\sigma_{3k} = det(\sigma)
+    \end{align}
+
+    y son conocidos como los invariantes del tensor.
+
+    Al graficar los c\'{i}rculos de Mohr, $\overline{\sigma}$ y $\sigma$ deben generar
+    la m\'{i}sma gr\'{a}fica, pues representan el mismo estado de esfuerzos ejercido
+    en \textit{P}. Al obtener los esfuerzos principales del tensor
+    \begin{equation*}
+        \sigma_{ij} = 
+        \begin{bmatrix}
+            6 & 4 & 0\\
+            4 & 6 & 0\\
+            0 & 0 & -2
+        \end{bmatrix}
+    \end{equation*}
+
+    y de su forma reducida
+
+    \begin{equation*}
+        \overline{\sigma}_{ij} = 
+        \begin{bmatrix}
+            10 & 0 & 0\\
+            0 & -2 & 0\\
+            0 & 0 & 2
+        \end{bmatrix}
+    \end{equation*}
+
+    Al comparar sus gr\'{a}ficas, se observa que efectivamente son las mismos circulos,
+    por lo que queda comprobado que $\sigma_{ij} \Leftrightarrow \overline{\sigma}_{ij}$.
+
+    %graficas aqui
+
+    \section{Conclusiones}
+    A partir de lo mostrado en el escrito, se puede concluir que el vector de los esfuerzos
+    representa  el estado de esfuerzos sobre un punto \textit{P} al hacer pasar un plano
+    $\bm{\eta}$ por este. Al hacer un n\'{u}mero grande de planos por dicho punto, se puede
+    definir el estado de esfuerzos sobre ese punto. Este estado de esfuerzos est\'{a} expresado
+    en el tensor de esfuerzos $\bm{\sigma}$. Una forma pr\'{a}ctica de representar el estado de
+    esfuerzos es mediante los c\'{i}rculos de Mohr, pues muestran para los esfuerzos normales 
+    y tangenciales sus m\'{a}ximos y m\'{i}nimos, sin importar el \'{a}ngulo del plano de corte.
+
+    Tambi\'{e}n se concluye que efectivamente existe una transformaci\'{o}n espec\'{i}fica del tensor
+    de los esfuerzos que reduce a dicho tensor en sus esfuerzos principales, simplificando enormemente
+    el trabajo de c\'{a}lculo y su an\'{a}lisis, de manera que el estado de esfuerzos que representan 
+    $\bm{\sigma}$ y $\bm{\overline{\sigma}}$ son los m\'{i}smos.
 \end{document}
