@@ -32,7 +32,7 @@ class Tensors:
     @staticmethod
     def principal_stresses(tensor):
         coeff = [
-            1, 
+            1,
             -Tensors.get_first_invariant(tensor),
             Tensors.get_second_invariant(tensor),
             -Tensors.get_third_invariant(tensor)
