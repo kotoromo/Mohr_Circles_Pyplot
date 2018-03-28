@@ -7,7 +7,7 @@ class MohrCircles:
         pass
 
     @staticmethod
-    def draw(stress_tensor, planes=1000):
+    def draw(stress_tensor, planes=1000, topng=True):
         for i in range(0, planes):
             r_v = np.random.random_integers(-10000, 10000, 3)
             _heta = r_v/np.sqrt(r_v.dot(r_v))
@@ -29,6 +29,7 @@ class MohrCircles:
             hspace=0.2,
             wspace=0.5
         )
-        plt.savefig("./Circulos de Mohr.png")
+        if topng:
+            plt.savefig("./Circulos de Mohr.png")
 
         plt.show()
