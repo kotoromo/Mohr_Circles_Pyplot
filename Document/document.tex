@@ -5,8 +5,13 @@
 \usepackage{amsmath}
 \usepackage{esvect}
 \usepackage{amssymb}
+\usepackage{siunitx}
+\usepackage{gensymb}
+\usepackage{oz}
 \usepackage{hyperref}
-
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{subcaption}
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
@@ -59,11 +64,10 @@
     aplicación de fuerzas por un agente externo.\\
 
     Los esfuerzos pueden ser transformados para ser analizados desde distintos ángulos.
-    Particularmente, existe una transformaci\'{o}n específica que permite reducir un tensor de
-    esfuerzos en sólo esfuerzos principales de tal manera que el análisis se
-    simplifica bastánte al reducir el tensor de 9 posibles componentes a tan solo 3, de
-    modo que el uso de las ecuaciones que involucran a dichos esfuerzos se
-    simplifican bastante.\\
+    Existe una transformaci\'{o}n específica que permite reducir un tensor de
+    esfuerzos en esfuerzos principales de tal manera que se logra reducir el tensor de 9 
+    posibles componentes a tan solo 3, de modo que el uso de las ecuaciones que involucran
+    a dichos esfuerzos se simplifican bastante.\\
     
     Los círculos de Mohr son una representación gráfica del estado de esfuerzos en un punto 
     \textit{P}. Para obtener este diagrama, se hacen pasar por un punto \textit{P}, 
@@ -72,7 +76,7 @@
     \bm{$t^{\eta}$} generan círculos representativos de los esfuezos que se aplican sobre 
     dicho punto referidos a los planos \bm{$\eta$} que se hacen pasar por este.\\
 
-    El proyecto presentado en este documento es el de un software que grafica en un plano
+    El proyecto presentado en este documento es un software que grafica en un plano
     ${t}_{N}$ \textit{vs} ${t}_{S}$ los círculos de Mohr que caracterizan a un tensor 
     de esfuerzos. A lo largo del documento se elaboran los análisis realizados para llegar 
     a las ecuaciones que describen a dichos círculos.
@@ -82,7 +86,7 @@
     El esfuerzo es una medida de intensidad de fuerza producto de la aplicación de cargas
     sobre el cuerpo; ya sea sobre cada unidad de volúmen del cuerpo (fuerzas de cuerpo);
     o sobre la superficie de este; fuerzas distribuidas sobre cada unidad de superficie
-    del cuerpo (fuerzas de superficie) usualmente resultado de fuerzas de contacto.
+    del cuerpo (fuerzas de superficie) usualmente un resultado de fuerzas de contacto.
 
     \subsection{El principio de Euler-Cauchy}
 
@@ -90,7 +94,15 @@
     \textit{B} con superficie \textit{S}, y un volúmen \textit{V}, sujeto a fuerzas de
     cuerpo \textbf{b} y fuerzas de superficie \textbf{p} arbitrarias; un punto interno 
     al cuerpo \textit{P} por el que pasa un plano $S^{*}$ tal que divide al cuerpo
-    en dos partes I y II; entonces se tiene algo como muestra la figura 1.
+    en dos partes I y II. (Vease la Figura \ref{fig:cauchy})
+
+    %Figura aqui
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{./img/cauchy}
+        \caption{Fuerza y momento actuando en el punto P dentro del elemento de superficie $\Delta S^*$}
+        \label{fig:cauchy}
+    \end{figure}
 
     Las fuerzas internas transmitidas a lo largo del plano de corte por la acción de
     la sección II sobre la sección I se distribuyen sobre el elemento de área
@@ -162,6 +174,16 @@
         \sigma_{ij}\vec{i_{j}} = t_{j}^{(\vec{i_{i}})}\vec{i_{j}}.
     \end{equation}
 
+    %spatial figure here
+    \begin{figure}[H]
+        
+        \centering
+
+        \includegraphics[width=\linewidth]{./img/espacio}
+        \caption{Representaci\'{o}n en el espacio de los esfuerzos.}
+        \label{fig:espacio}
+    \end{figure}
+
     La ecuaci\'{o}n anterior puede ser escrita en notaci\'{o}n matricial de la siguiente manera:
 
     \begin{equation}
@@ -182,10 +204,20 @@
             \vec{i_{3}}.
         \end{bmatrix}
     \end{equation}
+    
+    \newpage
 
     Adem\'{a}s es posible demostrar, dado
 
     %figura va aqui
+    \begin{figure}[H]
+        
+        \centering
+        \includegraphics[width=\linewidth]{./img/tetrahedro}
+        \caption{Tetrahedro con un v\'{e}rtice en $P$.}
+        \label{fig:tetrahedro}
+
+    \end{figure}
 
     que
 
@@ -208,7 +240,7 @@
     Como se ha explicado en las secciones anteriores, es posible definir el estado de esfuerzos
     en un punto \textit{P} al hacer pasar una cantidad infinita de planos de corte $\eta$.
     Como es imposible hacer pasar una infinidad de planos sobre un punto \textit{P}, se recurre
-    entonces a utilizar un n\'{u}mero lo suficientemente grande de planos para generar una
+    entonces a utilizar un n\'{u}mero suficientemente grande de planos para generar una
     aproximaci\'{o}n aceptable del estado de esfuerzos sobre el punto \textit{P}. Es por eso
     que para este proyecto, se ha decidido utilizar $1x10^3$ planos.
 
@@ -232,6 +264,12 @@
     componente tangencial $t_{S}$. 
     
     %figura del vector de esfuerzos
+    \begin{figure}
+        \centering
+        \includegraphics[width=\linewidth]{./img/vector_t}
+        \caption{Vector de los esfuerzos $\bm{t}$ y sus componentes $t_{N}$ y $t_{S}$}
+        \label{fig:vector_t}
+    \end{figure}
 
     Para obtener dichas componentes s\'{o}lo basta
     realizar un an\'{a}lisis geom\'{e}trico sencillo como se explica a continuaci\'{o}n.
@@ -255,7 +293,7 @@
         \lvert \vec{t}^{(\vec{\eta})} \rvert^2 = \vec{t}^{(\vec{\eta})} \cdot \vec{t}^{(\vec{\eta})},
     \end{equation}
     
-    que desarrollando la notaci\'{o} \'{i}ndice queda expresada la anterior ecuaci\'{o}n como
+    que desarrollando la notaci\'{o} \'{i}ndice queda expresada la anterior ecuaci\'{o}n como:
 
     \begin{equation}
         \lvert \vec{t}^{(\vec{\eta})} \rvert^2 = \sigma_{ik}\eta_{k}\vec{i_{i}} \cdot
@@ -304,14 +342,41 @@
     \end{equation*}
 
     %pantallazo del gui al ingresar el tensor para 1000 y 10000 planos
+    \begin{figure}[H]
+        \centering
+        \begin{subfigure}[h!]{0.4\linewidth}
+            \includegraphics[width=\linewidth]{./img/gui1k}
+            \caption{Graficando para 1000 planos.}
+        \end{subfigure}
+        \begin{subfigure}[h!]{0.4\linewidth}
+            \includegraphics[width=\linewidth]{./img/gui10k}
+            \caption{Graficando para 10000 planos.}
+        \end{subfigure}
+        \caption{Captura de pantalla del software.}
+        \label{fig:software}
+    \end{figure}
 
-    se obtuvo la siguiente gr\'{a}fica:
+    se obtuvieron la siguientes gr\'{a}fica:
 
     %grafica aqui con 1000 y 10000 planos
+    \begin{figure}[H]
+        \centering
+        \begin{subfigure}[h!]{0.4\linewidth}
+            \includegraphics[width=\linewidth]{./img/1k}
+            \caption{Estado de esfuerzos en $P$ al hacer pasar 1000 planos.}
+        \end{subfigure}
+        \begin{subfigure}[h!]{0.4\linewidth}
+            \includegraphics[width=\linewidth]{./img/10k}
+            \caption{Estado de esfuerzos en $P$ al hacer pasar 10000 planos.}
+        \end{subfigure}
+        \caption{Graficas obtenidas del software al hacer pasar 1000 y 10000 planos.}
+        \label{fig:graficas}
+    \end{figure}
 
     Observese que al disminuir el n\'{u}mero de planos, la gr\'{a}fica muestra mas huecos, por
     lo que el estado de esfuerzos sobre el punto \textit{P} no es tan preciso.
 
+    \newpage
 
     \subsection{Esfuerzos principales}
 
@@ -460,22 +525,45 @@
         \end{bmatrix}
     \end{equation*}
 
-    Al comparar sus gr\'{a}ficas, se observa que efectivamente son las mismos circulos,
+    \newpage
+
+    Al comparar sus gr\'{a}ficas, se observa que efectivamente son las mismos c\'{i}rculos,
     por lo que queda comprobado que $\sigma_{ij} \Leftrightarrow \overline{\sigma}_{ij}$.
 
     %graficas aqui
+    \begin{figure}[H]
+        \centering
+        \begin{subfigure}[h!]{0.4\linewidth}
+            \includegraphics[width=\linewidth]{./img/non_principal}
+            \caption{Estado de esfuerzos $\sigma$ en $P$ al hacer pasar 1000 planos.}
+        \end{subfigure}
+        \begin{subfigure}[h!]{0.4\linewidth}
+            \includegraphics[width=\linewidth]{./img/principal}
+            \caption{Estado de esfuerzos $\overline{\sigma}$ en $P$ al hacer pasar 10000 planos.}
+        \end{subfigure}
+        \caption{Graficas obtenidas del software para el tensor de esfuerzos completo y el reducido.}
+        \label{fig:graficas_2}
+    \end{figure}
 
     \section{Conclusiones}
-    A partir de lo mostrado en el escrito, se puede concluir que el vector de los esfuerzos
+    Se puede concluir que el vector de los esfuerzos $\vec{t}^{\vec{\eta}}$
     representa  el estado de esfuerzos sobre un punto \textit{P} al hacer pasar un plano
-    $\bm{\eta}$ por este. Al hacer un n\'{u}mero grande de planos por dicho punto, se puede
+    $\bm{\eta}$ por este. Al hacer pasar un n\'{u}mero grande de planos por dicho punto, se puede
     definir el estado de esfuerzos sobre ese punto. Este estado de esfuerzos est\'{a} expresado
     en el tensor de esfuerzos $\bm{\sigma}$. Una forma pr\'{a}ctica de representar el estado de
     esfuerzos es mediante los c\'{i}rculos de Mohr, pues muestran para los esfuerzos normales 
     y tangenciales sus m\'{a}ximos y m\'{i}nimos, sin importar el \'{a}ngulo del plano de corte.
 
-    Tambi\'{e}n se concluye que efectivamente existe una transformaci\'{o}n espec\'{i}fica del tensor
+    Adem\'{a}s se comprob\'{o} que efectivamente existe una transformaci\'{o}n espec\'{i}fica del tensor
     de los esfuerzos que reduce a dicho tensor en sus esfuerzos principales, simplificando enormemente
-    el trabajo de c\'{a}lculo y su an\'{a}lisis, de manera que el estado de esfuerzos que representan 
+    el trabajo de c\'{a}lculo y an\'{a}lisis, de manera que el estado de esfuerzos que representan 
     $\bm{\sigma}$ y $\bm{\overline{\sigma}}$ son los m\'{i}smos.
+
+    \section{Fuentes consultadas}
+    \begin{itemize}
+        \item Mase, G. E, \& Mase, G. Thomas. (1992). Continuum mechanics for engineers (2ed). EEUUA, Boca Raton: CRC Press.
+        \item Apuntes tomados en clase.
+    \end{itemize}
+
+    
 \end{document}
