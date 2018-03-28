@@ -4,3 +4,9 @@ __pycache__/tensors.cpython-36.pyc
 *.pyc
 .\__pycache__\
 *.png
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.pdf
+*.gz
